@@ -3,9 +3,12 @@ package ru.billing.client;
 import ru.billing.stocklist.FoodItem;
 import ru.billing.stocklist.GenericItem;
 import ru.billing.stocklist.ItemCatalog;
+import ru.itmo.client.CatalogFileLoader;
+import ru.itmo.exceptions.CatalogLoadException;
+import ru.itmo.exceptions.ItemAlreadyExistsException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CatalogLoadException, ItemAlreadyExistsException {
 
         GenericItem water = new GenericItem(1, "water", 300);
         GenericItem wood = new GenericItem(2, "wood", 1000);
@@ -26,22 +29,12 @@ public class Main {
              catalog.addItem(i);
         }
 
-      /*  long begin = new Date().getTime();
-        for (int i = 0; i < 1000000; i++)
-            catalog.findItemByID(10);
-        long end = new Date().getTime();
-        System.out.println("In HashMap: " + (end - begin));
-        begin = new Date().getTime();
-        for (int i = 0; i < 1000000; i++)
-            catalog.findItemByIDAL(10);
-        end = new Date().getTime();
-        System.out.println("In ArrayList: " + (end - begin));*/
-
         CatalogLoader loader = new CatalogStubLoader();
         loader.load(catalog);
+
+        CatalogLoader fls = new CatalogFileLoader("1.txt");
+        fls.load(catalog);
         catalog.printItems();
     }
-
-
     //loader.load(catalog);
 }
